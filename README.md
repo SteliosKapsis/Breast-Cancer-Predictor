@@ -1,28 +1,3 @@
-Title: Breast Cancer Classification with ML & Deep Learning
+INITIAL COMMIT: This is a python project where you take a dataset preprocess it, in order to check for high correlation between the different characteristics of a tumor (benign , malignant). After dealing with this problem, you can train your model to predict fairly accurately (considering many characteristics of a tumor) whether it is malignant or benign using different algorithms like Logistic Regression , Decision Tree, Random Forest, SVM(Support Vector Machine) , KNN(k-nearest neighbors) and NB(Naive Bayes). P.S.The plots are uploaded as .PNG files.
 
-INITIAL COMMIT: This project builds a comprehensive machine learning pipeline to classify tumors as malignant (M) or benign (B) using the Breast Cancer Wisconsin (Diagnostic) dataset. The notebook/script includes data preprocessing, visualization, model training, evaluation, and advanced performance comparison.
-
-SECOND COMMIT: Compared to the previous commit, this version introduces: Evaluation of six traditional ML models:  
-   - Logistic Regression  
-   - Decision Tree  
-   - Random Forest  
-   - K-Nearest Neighbors (KNN)  
-   - Naive Bayes  
-   - Support Vector Machine (SVM)  
-Cross-validation for KNN, NB, and SVM
-Added confusion matrix heatmaps for each model, 
-Visualized and compared: ROC curves and AUC scores, Precision-Recall curves and Average Precision scores
-
-THIRD COMMIT: Compared to the previous commit, this version introduces: Saved figures for EDA and model evaluations (e.g. heatmaps, ROC/PR curves), Added deep learning models (1) Fully Connected Neural Network (MLP), (2)1D Convolutional Neural Network (CNN),  
-Used early stopping for better generalization in neural models, Combined all results into a final performance summary table  
-
-Dependencies
-
-You can install all required dependencies using:
-
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn tensorflow
-                        OR
-conda install pandas numpy matplotlib seaborn scikit-learn
-conda install -c conda-forge tensorflow
-
+SECOND COMMIT COMMIT: ROC and PR curve visualizations for all models, Model performance comparison table, Improved variable naming, structure, and readability, Cleaner standardization process, Removal of redundant/confusing outputs

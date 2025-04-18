@@ -1,18 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[53]:
-
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import warnings
-
-
-# In[54]:
-
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -33,87 +23,28 @@ from sklearn.metrics import (
     f1_score
 )
 
-
-# In[55]:
-
-
 warnings.filterwarnings('ignore')
-
-
-# In[56]:
 
 
 df = pd.read_csv('data.csv')
 df.head()
-
-
-# In[57]:
-
-
 df.tail()
-
-
-# In[58]:
-
-
 df.shape
-
-
-# In[59]:
-
-
 df.describe().T
-
-
-# In[60]:
-
-
 df.diagnosis.unique()
-
-
-# In[61]:
-
 
 print(df['diagnosis'].value_counts())
 sns.countplot(df['diagnosis'], palette='husl')
 plt.savefig("diagnosis_count.png")
 plt.close()
 
-
-# In[62]:
-
-
 df.drop('id',axis=1,inplace=True)
 df.drop('Unnamed: 32',axis=1,inplace=True)
-
-
-# In[63]:
-
-
 df.head()
-
-
-# In[64]:
-
-
 df['diagnosis'] = df['diagnosis'].map({'M':1,'B':0})
 df.head()
-
-
-# In[65]:
-
-
 df.isnull().sum()
-
-
-# In[66]:
-
-
 df.corr()
-
-
-# In[67]:
-
 
 plt.hist(df['diagnosis'], color='g')
 plt.title('Plot_Diagnosis (M=1 , B=0)')
@@ -121,18 +52,10 @@ plt.show()
 plt.savefig("Plot_Diagnosis.png")
 plt.close()
 
-
-# In[68]:
-
-
 plt.figure(figsize=(20,20))
 sns.heatmap(df.corr(), annot=True)
 plt.savefig("heat_map.png")
 plt.close()
-
-
-# In[69]:
-
 
 # generate a scatter plot matrix with the "mean" columns
 cols = ['diagnosis',
@@ -150,10 +73,6 @@ cols = ['diagnosis',
 sns.pairplot(data=df[cols], hue='diagnosis', palette='rocket')
 plt.savefig(" scatter plot matrix with the ""mean"" columns.png")
 plt.close()
-
-
-# In[70]:
-
 
 # Generate and visualize the correlation matrix
 corr = df.corr().round(2)
@@ -177,10 +96,6 @@ plt.close()
 
 plt.tight_layout()
 
-
-# In[71]:
-
-
 # first, drop all "worst" columns
 cols = ['radius_worst', 
         'texture_worst', 
@@ -194,20 +109,12 @@ cols = ['radius_worst',
         'fractal_dimension_worst']
 df = df.drop(cols, axis=1)
 
-
-# In[72]:
-
-
 # then, drop all columns related to the "perimeter" and "area" attributes
 cols = ['perimeter_mean',
         'perimeter_se', 
         'area_mean', 
         'area_se']
 df = df.drop(cols, axis=1)
-
-
-# In[73]:
-
 
 # lastly, drop all columns related to the "concavity" and "concave points" attributes
 cols = ['concavity_mean',
@@ -216,16 +123,8 @@ cols = ['concavity_mean',
         'concave points_se']
 df = df.drop(cols, axis=1)
 
-
-# In[74]:
-
-
 # verify remaining columns
 df.columns
-
-
-# In[75]:
-
 
 # Draw the heatmap again, with the new correlation matrix
 corr = df.corr().round(2)
@@ -244,10 +143,6 @@ plt.tight_layout()
 X=df.drop(['diagnosis'],axis=1)
 y = df['diagnosis']
 
-
-# In[76]:
-
-
 from sklearn.model_selection import train_test_split
 
 # Split data
@@ -256,19 +151,12 @@ y = df['diagnosis']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=40)
 
 
-# In[77]:
-
-
 from sklearn.preprocessing import StandardScaler
 
 # Standardize features
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
-
-
-# In[78]:
-
 
 # ---------------- Logistic Regression ----------------
 lr = LogisticRegression()
@@ -284,10 +172,6 @@ plt.close()
 print("\nLogistic Regression Accuracy:", accuracy_score(y_test, pred_lr))
 print(classification_report(y_test, pred_lr))
 
-
-# In[79]:
-
-
 # ---------------- Decision Tree ----------------
 dtc = DecisionTreeClassifier()
 dtc.fit(X_train, y_train)
@@ -301,10 +185,6 @@ plt.close()
 
 print("\nDecision Tree Accuracy:", accuracy_score(y_test, pred_dtc))
 print(classification_report(y_test, pred_dtc))
-
-
-# In[80]:
-
 
 # ---------------- Random Forest ----------------
 rfc = RandomForestClassifier()
@@ -320,10 +200,6 @@ plt.close()
 print("\nRandom Forest Accuracy:", accuracy_score(y_test, pred_rfc))
 print(classification_report(y_test, pred_rfc))
 
-
-# In[81]:
-
-
 # ---------------- KNN, Naive Bayes, SVM (Cross-Validation) ----------------
 models = [
     ('KNN', KNeighborsClassifier()),
@@ -337,18 +213,11 @@ for name, model in models:
     scores = cross_val_score(model, X_train, y_train, cv=kfold, scoring='accuracy')
     print(f"{name}: {scores.mean():.4f} (+/- {scores.std():.4f})")
 
-
-# In[82]:
-
-
 cm_knn = confusion_matrix(y_test, KNeighborsClassifier().fit(X_train, y_train).predict(X_test))
 sns.heatmap(cm_knn, annot=True)
 plt.title("Confusion Matrix - KNN")
 plt.savefig('knn_cm.png')
 plt.close()
-
-
-# In[83]:
 
 
 cm_nb = confusion_matrix(y_test, GaussianNB().fit(X_train, y_train).predict(X_test))
@@ -358,17 +227,11 @@ plt.savefig('naive_bayes_cm.png')
 plt.close()
 
 
-# In[84]:
-
-
 cm_svm = confusion_matrix(y_test, pred_svm)
 sns.heatmap(cm_svm, annot=True)
 plt.title("Confusion Matrix - SVM")
 plt.savefig('svm_cm.png')
 plt.close()
-
-
-# In[85]:
 
 
 # ---------------- Final SVM Evaluation ----------------
@@ -380,10 +243,6 @@ print("\nFinal SVM Accuracy:", accuracy_score(y_test, pred_svm))
 print(classification_report(y_test, pred_svm))
 print("Confusion Matrix - SVM:\n", confusion_matrix(y_test, pred_svm))
 
-
-# In[86]:
-
-
 from sklearn.metrics import precision_recall_curve, average_precision_score
 
 # Create a new figure for PR curves
@@ -391,10 +250,6 @@ plt.figure(figsize=(10, 8))
 
 # Dictionary to store average precision scores
 pr_scores = {}
-
-
-# In[87]:
-
 
 # Helper to plot PR curve
 def plot_pr_curve(model, X_test, y_test, label):
@@ -409,9 +264,6 @@ def plot_pr_curve(model, X_test, y_test, label):
     plt.plot(recall, precision, lw=2, label=f'{label} (AP = {avg_precision:.2f})')
 
 
-# In[88]:
-
-
 # Re-fit classifiers if needed (ensure probability support)
 models_pr = {
     "Logistic Regression": LogisticRegression().fit(X_train, y_train),
@@ -421,9 +273,6 @@ models_pr = {
     "Naive Bayes": GaussianNB().fit(X_train, y_train),
     "SVM": SVC(probability=True).fit(X_train, y_train)
 }
-
-
-# In[89]:
 
 
 for name, model in models_pr.items():
@@ -441,9 +290,6 @@ plt.savefig("Precision-Recall_All.png")
 plt.close()
 
 
-# In[90]:
-
-
 from sklearn.metrics import roc_curve, auc
 
 # Create a figure
@@ -451,10 +297,6 @@ plt.figure(figsize=(10, 8))
 
 # Dictionary to store AUC scores
 auc_scores = {}
-
-
-# In[91]:
-
 
 # Helper to plot ROC curve
 def plot_roc_curve(model, X_test, y_test, label):
@@ -470,9 +312,6 @@ def plot_roc_curve(model, X_test, y_test, label):
     plt.plot(fpr, tpr, lw=2, label=f'{label} (AUC = {roc_auc:.2f})')
 
 
-# In[92]:
-
-
 # Re-fit classifiers to ensure we have access to their probability outputs
 models_roc = {
     "Logistic Regression": LogisticRegression().fit(X_train, y_train),
@@ -482,9 +321,6 @@ models_roc = {
     "Naive Bayes": GaussianNB().fit(X_train, y_train),
     "SVM": SVC(probability=True).fit(X_train, y_train)  # important to enable probability estimates
 }
-
-
-# In[93]:
 
 
 for name, model in models_roc.items():
@@ -503,9 +339,6 @@ plt.tight_layout()
 plt.show()
 plt.savefig("ROC_curves_All.png")
 plt.close()
-
-
-# In[94]:
 
 
 from sklearn.metrics import f1_score
@@ -546,9 +379,6 @@ ml_summary_df = pd.DataFrame(metrics_summary, columns=['Model', 'Accuracy', 'AUC
 ml_summary_df[['Accuracy', 'AUC', 'Average Precision', 'F1 Score']] = ml_summary_df[['Accuracy', 'AUC', 'Average Precision', 'F1 Score']].round(4)
 
 
-# In[95]:
-
-
 # Display summary table
 print("Model Performance Summary:")
 print(ml_summary_df)
@@ -569,10 +399,6 @@ from tensorflow.keras.layers import Dense, Dropout, BatchNormalization
 from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.metrics import roc_auc_score
 
-
-# In[97]:
-
-
 # ---------------- Deep Learning Model (MLP) ----------------
 model = Sequential()
 model.add(Dense(32, input_dim=X_train.shape[1], activation='relu'))
@@ -591,10 +417,6 @@ history = model.fit(X_train, y_train, validation_split=0.2, epochs=100, batch_si
 loss, accuracy = model.evaluate(X_test, y_test, verbose=0)
 print(f"\nNeural Network Accuracy: {accuracy:.4f}")
 
-
-# In[98]:
-
-
 y_pred_nn = model.predict(X_test).ravel()
 y_pred_label = (y_pred_nn > 0.5).astype(int)
 
@@ -608,13 +430,7 @@ print(f"Neural Network Average Precision: {ap_nn:.4f}")
 print(f"Neural Network F1 Score: {f1_nn:.4f}")
 
 
-# In[99]:
-
-
 metrics_summary.append(['Neural Network', acc_nn, auc_nn, ap_nn, f1_nn])
-
-
-# In[100]:
 
 
 plt.figure(figsize=(8, 5))
@@ -631,18 +447,12 @@ plt.savefig("NN Training Loss.png")
 plt.close()
 
 
-# In[101]:
-
-
 # ---------------- Deep Learning Model (CNN) ----------------
 from tensorflow.keras.layers import Conv1D, MaxPooling1D, Flatten
 
 # Reshape for Conv1D: (samples, time_steps, features)
 X_train_cnn = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
 X_test_cnn = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
-
-
-# In[102]:
 
 
 # ---------------- Convolutional Neural Network ----------------
@@ -664,9 +474,6 @@ loss_cnn, acc_cnn = cnn_model.evaluate(X_test_cnn, y_test, verbose=0)
 print(f"\nCNN Accuracy: {acc_cnn:.4f}")
 
 
-# In[103]:
-
-
 y_pred_cnn_prob = cnn_model.predict(X_test_cnn).ravel()
 y_pred_cnn_label = (y_pred_cnn_prob > 0.5).astype(int)
 
@@ -679,13 +486,7 @@ print(f"CNN Average Precision: {ap_cnn:.4f}")
 print(f"CNN F1 Score: {f1_cnn:.4f}")
 
 
-# In[104]:
-
-
 metrics_summary.append(['CNN', acc_cnn, auc_cnn, ap_cnn, f1_cnn])
-
-
-# In[105]:
 
 
 plt.plot(history_cnn.history['loss'], label='Train Loss')
@@ -699,9 +500,6 @@ plt.tight_layout()
 plt.show()
 plt.savefig("CNN_Training_Loss.png")
 plt.close()
-
-
-# In[106]:
 
 
 # Create a summary DataFrame for deep learning models
@@ -718,9 +516,6 @@ dl_summary_df[['Accuracy', 'AUC', 'Average Precision', 'F1 Score']] = dl_summary
 # Display the table
 print("\nDeep Learning Model Performance Summary:")
 print(dl_summary_df)
-
-
-# In[107]:
 
 
 # Combine ML and DL summaries
