@@ -4,7 +4,6 @@ This project builds a comprehensive machine learning and deep learning pipeline 
 
 This version introduces:
 
-Structured Jupyter Notebook cells** for clean step-by-step execution  
 Saved figures for **EDA and model evaluations** (e.g. heatmaps, ROC/PR curves)  
 Evaluation of **six traditional ML models**:  
  - Logistic Regression  
