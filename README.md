@@ -1,3 +1,38 @@
-INITIAL COMMIT: This is a python project where you take a dataset preprocess it, in order to check for high correlation between the different characteristics of a tumor (benign , malignant). After dealing with this problem, you can train your model to predict fairly accurately (considering many characteristics of a tumor) whether it is malignant or benign using different algorithms like Logistic Regression , Decision Tree, Random Forest, SVM(Support Vector Machine) , KNN(k-nearest neighbors) and NB(Naive Bayes). P.S.The plots are uploaded as .PNG files.
+Breast Cancer Classification with ML & Deep Learning
 
-SECOND COMMIT COMMIT: ROC and PR curve visualizations for all models, Model performance comparison table, Improved variable naming, structure, and readability, Cleaner standardization process, Removal of redundant/confusing outputs
+This project builds a comprehensive machine learning and deep learning pipeline to classify tumors as malignant (M) or benign (B) using the Breast Cancer Wisconsin (Diagnostic) dataset. The notebook/script includes data preprocessing, visualization, model training, evaluation, and advanced performance comparison.
+
+This version introduces:
+
+Structured Jupyter Notebook cells** for clean step-by-step execution  
+Saved figures for **EDA and model evaluations** (e.g. heatmaps, ROC/PR curves)  
+Evaluation of **six traditional ML models**:  
+ - Logistic Regression  
+ - Decision Tree  
+ - Random Forest  
+ - K-Nearest Neighbors (KNN)  
+ - Naive Bayes  
+ - Support Vector Machine (SVM)  
+Cross-validation for KNN, NB, and SVM  
+Added confusion matrix heatmaps for each model  
+Visualized and compared:
+ - ROC curves and AUC scores  
+ - Precision-Recall curves and Average Precision scores  
+Added **deep learning models:  
+ - Fully Connected Neural Network (MLP)  
+ - 1D Convolutional Neural Network (CNN)  
+Used **early stopping** for better generalization in neural models  
+Combined all results into a final **performance summary table**  
+
+Dependencies
+
+You can install all required dependencies using:
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn tensorflow
+
+or
+
+conda install pandas numpy matplotlib seaborn scikit-learn
+conda install -c conda-forge tensorflow
+
